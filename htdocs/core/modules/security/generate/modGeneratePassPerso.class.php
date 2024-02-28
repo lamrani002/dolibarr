@@ -42,7 +42,7 @@ class modGeneratePassPerso extends ModeleGenPassword
 	/**
 	 * Minimum length (text visible by end user)
 	 *
-	 * @var int
+	 * @var int|string
 	 */
 	public $length;
 
