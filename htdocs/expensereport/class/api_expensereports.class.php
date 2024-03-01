@@ -587,7 +587,7 @@ class ExpenseReports extends DolibarrApi
 	 * Get a given payment.
 	 *
 	 * @param	int		$pid	Payment ID
-	 * @return 	array 			PaymentExpenseReport object
+	 * @return 	object 			PaymentExpenseReport object
 	 *
 	 * @url     GET /payments/{pid}
 	 *
@@ -653,7 +653,7 @@ class ExpenseReports extends DolibarrApi
 	 *
 	 * @param int    $id              ID of paymentExpenseReport
 	 * @param array  $request_data    data
-	 * @return int
+	 * @return object
 	 *
 	 * @url     PUT {id}/payments
 	 */
