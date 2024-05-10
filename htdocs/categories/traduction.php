@@ -163,6 +163,39 @@ $cancel != $langs->trans("Cancel") &&
 	}
 }
 
+if ($action == 'delete' && GETPOSTISSET('langtodelete') && ($user->hasRight('categorie', 'supprimer'))) {
+	$object->fetch($id);
+
+	$langToDel = GETPOST('langtodelete', 'alpha');
+
+	$sql = "SELECT * FROM ".MAIN_DB_PREFIX."categorie_lang";
+	$sql .= " WHERE fk_category = ".((int) $id);
+	$sql .= " AND lang = '".dol_escape_htmltag($langToDel)."'";
+
+	$resql = $db->query($sql);
+	$num = $db->num_rows($resql);
+
+	if ($num) {
+		$sqlDel = "DELETE FROM ".MAIN_DB_PREFIX."categorie_lang";
+		$sqlDel .= " WHERE fk_category = ".((int) $id);
+		$sqlDel .= " AND lang = '".$db->escape($langToDel)."'";
+
+
+		$resqlDel = $db->query($sqlDel);
+		if ($resqlDel) {
+			$db->commit();
+			setEventMessages($langs->trans("Translation deleted"), null, 'mesgs');
+			header('Location: '.$_SERVER['PHP_SELF'].'?id='.$object->id.'&type='.$type);
+			$action = '';
+		} else {
+			$db->rollback();
+			setEventMessages($langs->trans("ErrorDeletingTranslation"), null, 'errors');
+		}
+	} else {
+		setEventMessages($object->error, $object->errors, 'errors');
+	}
+}
+
 
 /*
  * View
